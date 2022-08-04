@@ -21,7 +21,11 @@ public class UserServiceImp implements UserService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
+
+    /**
+     * 侵入了事务管理器方法，废弃
+     */
+/*    @Autowired
     private MyTransManager myTransManager;
 
     @Override
@@ -36,5 +40,15 @@ public class UserServiceImp implements UserService {
             e.printStackTrace();
             myTransManager.rollback();
         }
+    }*/
+
+    /**
+     * 静态代理方法
+     */
+
+    @Override
+    public void addUser(User user, Operation operation) throws SQLException {
+        userDao.insert(user);
+        userDao.insertLog(operation);
     }
 }
