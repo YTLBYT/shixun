@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
     private MyTransManager myTransManager;
 
     @Override
-    public void insert(User user) throws SQLException {
+    public void insert(User user) throws Exception {
             Connection connection = myTransManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into students_information(stu_num,stu_name,stu_gender,stu_age,stu_tel) values(?,?,?,?,?)");
             preparedStatement.setString(1, user.getStu_num());
@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void insertLog(Operation operation) throws SQLException {
+    public void insertLog(Operation operation) throws Exception {
             Connection connection = myTransManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into log values (?,?)");
             preparedStatement.setString(1, operation.getUid());

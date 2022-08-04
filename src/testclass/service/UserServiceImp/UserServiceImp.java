@@ -47,7 +47,7 @@ public class UserServiceImp implements UserService {
      */
 
     @Override
-    public void addUser(User user, Operation operation) throws SQLException {
+    public void addUser(User user, Operation operation) throws Exception {
         userDao.insert(user);
         userDao.insertLog(operation);
     }

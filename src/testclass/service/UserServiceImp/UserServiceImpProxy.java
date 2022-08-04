@@ -25,7 +25,7 @@ public class UserServiceImpProxy implements UserService {
             myTransManager.startTrans();
             userService.addUser(user, operation);
             myTransManager.commit();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             myTransManager.rollback();
         }

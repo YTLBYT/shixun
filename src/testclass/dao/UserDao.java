@@ -6,6 +6,6 @@ import testclass.entity.User;
 import java.sql.SQLException;
 
 public interface UserDao {
-    void insert(User user) throws SQLException;
-    void insertLog(Operation operation) throws SQLException;
+    void insert(User user) throws Exception;
+    void insertLog(Operation operation) throws Exception;
 }
