@@ -3,16 +3,13 @@ package testclass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import testclass.entity.Operation;
 import testclass.entity.User;
 import testclass.service.UserService;
-import testclass.service.UserServiceImp.TransInvocationHandler;
-
-import java.lang.reflect.Proxy;
-import java.sql.SQLException;
+import testclass.service.UserServiceImp.TransInvocationHandler_cglib;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")
@@ -64,7 +61,7 @@ public class test {
      * 测试jdk动态代理
      */
 
-    @Autowired
+/*    @Autowired
     private TransInvocationHandler transInvocationHandler;
     @Test
     public void test3() {
@@ -76,7 +73,34 @@ public class test {
         UserService userService = (UserService) Proxy.newProxyInstance(transInvocationHandler.getTarget().getClass().getClassLoader(),
                 transInvocationHandler.getTarget().getClass().getInterfaces(),
                 transInvocationHandler);
-        User user = new User("202031061211", "杨雨", "汉族", 13, "19283965717");
+        User user = new User("202031061216", "杨雨", "汉族", 13, "19283965717");
+        Operation operation = new Operation();
+        operation.setUid("001");
+        operation.setName("yt");
+        try {
+            userService.addUser(user, operation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    /**
+     * 测试cglib动态代理
+     */
+    @Autowired
+    TransInvocationHandler_cglib transInvocationHandler_cglib;
+    @Test
+    public void test4(){
+        //spring框架提供了一个Enhancer类型
+        Enhancer enhancer = new Enhancer();
+        //使用该对象设置相关的属性
+        //设置生成的代理类继承的类--设置业务类类型
+        enhancer.setSuperclass(transInvocationHandler_cglib.getTarget().getClass());
+        //设置代理类需要做什么事情
+        enhancer.setCallback(transInvocationHandler_cglib);
+        //根据当前的设置创建代理类
+        UserService userService = (UserService)enhancer.create();
+        User user = new User("202031061216", "杨雨", "汉族", 13, "19283965717");
         Operation operation = new Operation();
         operation.setUid("001");
         operation.setName("yt");
