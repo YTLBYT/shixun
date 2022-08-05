@@ -29,5 +29,7 @@
     <orderEntry type="library" name="commons-dbcp-1.2.2" level="project" />
     <orderEntry type="library" name="spring-test-5.3.9" level="project" />
     <orderEntry type="library" name="spring-aop-5.3.9" level="project" />
+    <orderEntry type="library" name="aspectj-1.9.6" level="project" />
+    <orderEntry type="library" name="aspectjweaver" level="project" />
   </component>
 </module>

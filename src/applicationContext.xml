@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+
+    <bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <context:property-placeholder location="jdbc.properties"></context:property-placeholder>
+
+    <context:component-scan base-package="springaop.*"></context:component-scan>
+
+<!--    &lt;!&ndash;aop配置&ndash;&gt;
+    <aop:config>
+        &lt;!&ndash;定义切面-表示增强的功能&ndash;&gt;
+        <aop:aspect ref="myTransManager" order="2">
+            &lt;!&ndash;定义切点 表示切面在哪些地方执行功能增强&ndash;&gt;
+            <aop:pointcut id="p1" expression="execution(* springaop.service.UserServiceImp.UserServiceImp.addUser(..))"/>
+            &lt;!&ndash;在执行切点之前&ndash;&gt;
+            <aop:before method="startTrans" pointcut-ref="p1"></aop:before>
+            &lt;!&ndash;在执行切点成功之后&ndash;&gt;
+            <aop:after-returning method="commit" pointcut-ref="p1"></aop:after-returning>
+            &lt;!&ndash;在方法执行异常&ndash;&gt;
+            <aop:after-throwing method="rollback" pointcut-ref="p1"></aop:after-throwing>
+        </aop:aspect>
+    &lt;!&ndash;order可以决定切面执行顺序 &ndash;&gt;
+        <aop:aspect ref="computerTime" order="1">
+            <aop:pointcut id="p2" expression="execution(* springaop.service.UserServiceImp.UserServiceImp.addUser(..))"/>
+            <aop:before method="getStartTime" pointcut-ref="p2"></aop:before>
+            <aop:after-returning method="getEndTime" pointcut-ref="p2"></aop:after-returning>
+            <aop:after-throwing method="getEndTime" pointcut-ref="p2"></aop:after-throwing>
+        </aop:aspect>
+    </aop:config>-->
+    <!--使用注解配置aop需要配置-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+</beans>
