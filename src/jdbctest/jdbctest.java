@@ -67,7 +67,7 @@ public class jdbctest {
     public void test5() {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
         JdbcTemplate jdbcTemplate = ac.getBean("jdbcTemplate", JdbcTemplate.class);
-        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select stu_num, stu_name from students_information");
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select stu_num, stu_name from students_information where stu_num = '202031061211'");
         for (Map<String, Object> map : maps) {
             System.out.println(map);
         }
